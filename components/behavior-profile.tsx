@@ -13,22 +13,22 @@ interface BehaviorProfileProps {
 
 export function BehaviorProfile({ behavior }: BehaviorProfileProps) {
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
-      <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
+    <div className="rounded-xl border border-border/50 bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 backdrop-blur-sm">
+      <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
         <Brain className="h-5 w-5 text-primary" />
-        Your Digital Twin Profile
+        Digital Twin Profile
       </h2>
 
       <div className="space-y-4">
         {/* Locations */}
-        <div className="rounded-lg bg-secondary/50 p-4">
+        <div className="rounded-lg bg-secondary/50 border border-border/30 p-4 hover:border-primary/30 transition-colors">
           <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
             <MapPin className="h-4 w-4" />
             Normal Locations
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             {behavior.normalLocations.map((location) => (
-              <span key={location} className="rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary">
+              <span key={location} className="rounded-full bg-primary/20 px-3 py-1.5 text-xs font-medium text-primary">
                 {location}
               </span>
             ))}
@@ -36,7 +36,7 @@ export function BehaviorProfile({ behavior }: BehaviorProfileProps) {
         </div>
 
         {/* Active Hours */}
-        <div className="rounded-lg bg-secondary/50 p-4">
+        <div className="rounded-lg bg-secondary/50 border border-border/30 p-4 hover:border-accent/30 transition-colors">
           <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
             <Clock className="h-4 w-4" />
             Active Hours
@@ -47,7 +47,7 @@ export function BehaviorProfile({ behavior }: BehaviorProfileProps) {
         </div>
 
         {/* Typical Devices */}
-        <div className="rounded-lg bg-secondary/50 p-4">
+        <div className="rounded-lg bg-secondary/50 border border-border/30 p-4 hover:border-primary/30 transition-colors">
           <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
             <Smartphone className="h-4 w-4" />
             Typical Devices

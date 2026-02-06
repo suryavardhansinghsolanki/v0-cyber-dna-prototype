@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { DashboardHeader } from '@/components/dashboard-header';
+import { Card } from '@/components/ui/card';
 import { AlertsPanel } from '@/components/alerts-panel';
 import { BehaviorProfile } from '@/components/behavior-profile';
 import { ActivityTimeline } from '@/components/activity-timeline';
 import { DemoScenarios } from '@/components/demo-scenarios';
 import { StatisticsDashboard } from '@/components/statistics-dashboard';
-import { Zap, Play, Pause } from 'lucide-react';
+import { DashboardHeader } from '@/components/dashboard-header'; // Added import { BadgeAlert as boardHeader } from 'lucide-react';
+import { Zap, Shield, AlertTriangle, Activity, TrendingUp, Lock } from 'lucide-react';
 
 interface UserProfile {
   user: {
@@ -150,43 +151,109 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <DashboardHeader
-        riskLevel={profile.statistics.riskLevel}
-        anomaliesCount={profile.statistics.anomaliesDetected}
-        userName={profile.user.name}
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-border/50 backdrop-blur-xl bg-background/80">
+        <div className="mx-auto max-w-7xl px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent">
+                <Shield className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Cyber-DNA</h1>
+                <p className="text-xs text-muted-foreground">Your Personal Digital Twin</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 border border-border/50">
+                <div className="w-2 h-2 rounded-full bg-chart-2 animate-pulse" />
+                <span className="text-sm font-medium">Active</span>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium">{profile.user.name}</p>
+                <p className="text-xs text-muted-foreground">{profile.user.email}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      <div className="mx-auto max-w-7xl p-6 space-y-6">
+      {/* Main Content */}
+      <div className="mx-auto max-w-7xl p-6 space-y-8">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-secondary/50 border-border/50 p-5 hover:border-primary/30 transition-colors">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-muted-foreground text-sm font-medium">Risk Level</p>
+                <p className="text-3xl font-bold mt-2">
+                  <span className={profile.statistics.riskLevel === 'CRITICAL' ? 'text-destructive' : profile.statistics.riskLevel === 'HIGH' ? 'text-orange-500' : 'text-chart-2'}>
+                    {profile.statistics.riskLevel}
+                  </span>
+                </p>
+              </div>
+              <AlertTriangle className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </Card>
+
+          <Card className="bg-secondary/50 border-border/50 p-5 hover:border-accent/30 transition-colors">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-muted-foreground text-sm font-medium">Anomalies</p>
+                <p className="text-3xl font-bold mt-2 text-primary">{profile.statistics.anomaliesDetected}</p>
+              </div>
+              <Activity className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </Card>
+
+          <Card className="bg-secondary/50 border-border/50 p-5 hover:border-primary/30 transition-colors">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-muted-foreground text-sm font-medium">Total Activities</p>
+                <p className="text-3xl font-bold mt-2 text-chart-2">{profile.statistics.totalActivities}</p>
+              </div>
+              <TrendingUp className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </Card>
+
+          <Card className="bg-secondary/50 border-border/50 p-5 hover:border-accent/30 transition-colors">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-muted-foreground text-sm font-medium">Protected</p>
+                <p className="text-3xl font-bold mt-2 text-green-500">{profile.statistics.normalActivities}</p>
+              </div>
+              <Lock className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </Card>
+        </div>
+
+        {/* Main Grid */}
         <div className="grid gap-6 lg:grid-cols-3">
-          {/* Main Content Area */}
+          {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Alerts Panel */}
             <AlertsPanel alerts={alerts} onDismiss={dismissAlert} />
-
-            {/* Activity Timeline */}
             <ActivityTimeline activities={profile.recentActivities} />
-
-            {/* Demo Scenarios */}
             <DemoScenarios onScenarioTrigger={simulateScenario} isLoading={isSimulating} />
           </div>
 
-          {/* Sidebar */}
+          {/* Right Sidebar */}
           <div className="space-y-6">
-            {/* Statistics Dashboard */}
             <StatisticsDashboard statistics={profile.statistics} />
-
-            {/* Behavior Profile */}
             <BehaviorProfile behavior={profile.behavior} />
           </div>
         </div>
 
-        {/* Footer Info */}
-        <div className="rounded-lg border border-border/50 bg-secondary/20 p-6 text-center">
+        {/* Footer */}
+        <div className="rounded-xl border border-primary/20 bg-gradient-to-r from-primary/10 to-accent/10 p-6 text-center">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Zap className="w-4 h-4 text-primary" />
+            <h3 className="font-semibold text-foreground">Cyber-DNA Protection Active</h3>
+          </div>
           <p className="text-sm text-muted-foreground">
-            Cyber-DNA is constantly monitoring your digital presence across all devices and platforms.
+            Your digital twin is monitoring all activities in real-time across all devices and platforms.
             <br />
-            Your privacy is protected with end-to-end encryption.
+            End-to-end encryption secures all your data.
           </p>
         </div>
       </div>

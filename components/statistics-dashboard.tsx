@@ -20,33 +20,33 @@ export function StatisticsDashboard({ statistics }: StatisticsDashboardProps) {
   const protectionScore = Math.max(0, 100 - threatBlockedRate * 2);
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
+    <div className="rounded-xl border border-border/50 bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 backdrop-blur-sm">
       <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
         <TrendingUp className="h-5 w-5 text-primary" />
-        Security Statistics
+        Security Stats
       </h2>
 
       <div className="grid gap-4 mb-6">
         {/* Protection Score */}
-        <div className="rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 p-4 border border-primary/30">
-          <p className="text-sm text-muted-foreground">Protection Score</p>
-          <div className="mt-3 flex items-end gap-4">
-            <div className="text-4xl font-bold text-primary">{protectionScore}%</div>
+        <div className="rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 p-5 border border-primary/30">
+          <p className="text-sm text-muted-foreground font-medium">Protection Score</p>
+          <div className="mt-4 flex items-end gap-4">
+            <div className="text-5xl font-bold text-primary">{protectionScore}%</div>
             <div className="flex-1">
-              <div className="w-full bg-secondary/50 rounded-full h-2">
+              <div className="w-full bg-secondary/50 rounded-full h-2.5">
                 <div
-                  className="bg-primary h-2 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-primary to-accent h-2.5 rounded-full transition-all duration-500"
                   style={{ width: `${protectionScore}%` }}
                 />
               </div>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
+          <p className="text-xs text-muted-foreground mt-3">
             {protectionScore > 80
-              ? 'Excellent protection level'
+              ? 'Excellent protection'
               : protectionScore > 60
-                ? 'Good protection level'
-                : 'Monitor activity closely'}
+                ? 'Good protection'
+                : 'Monitor closely'}
           </p>
         </div>
 

@@ -48,23 +48,23 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
   const recentActivities = activities.slice(0, 8);
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
-      <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
+    <div className="rounded-xl border border-border/50 bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 backdrop-blur-sm">
+      <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
         <Activity className="h-5 w-5 text-primary" />
-        Recent Activity
+        Activity Timeline
       </h2>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {recentActivities.map((activity) => (
-          <div key={activity.id} className={`rounded-lg border-l-4 p-4 ${getActivityColor(activity.anomalyScore)}`}>
+          <div key={activity.id} className={`rounded-lg border-l-4 p-4 transition-all hover:bg-secondary/30 ${getActivityColor(activity.anomalyScore)}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="flex flex-1 items-start gap-3">
-                <span className="text-2xl">{getActivityIcon(activity.type)}</span>
+                <span className="text-xl">{getActivityIcon(activity.type)}</span>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-semibold text-sm capitalize">{activity.type}</h3>
                     {activity.anomalyScore > 0.7 && (
-                      <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-xs font-medium text-red-400">
+                      <span className="rounded-full bg-destructive/20 px-2 py-0.5 text-xs font-medium text-destructive">
                         Suspicious
                       </span>
                     )}
@@ -82,12 +82,12 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
                       <span className="font-medium text-foreground">${activity.details.amount}</span>
                     )}
                     {activity.details.deviceType && (
-                      <span className="capitalize">{activity.details.deviceType}</span>
+                      <span className="capitalize text-muted-foreground">{activity.details.deviceType}</span>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 ml-2">
                 <div className="text-right">
                   <p className="text-xs text-muted-foreground">Risk</p>
                   <p className="text-sm font-semibold text-foreground">{(activity.anomalyScore * 100).toFixed(0)}%</p>
@@ -100,9 +100,9 @@ export function ActivityTimeline({ activities }: ActivityTimelineProps) {
       </div>
 
       {activities.length > 8 && (
-        <div className="mt-4 text-center">
+        <div className="mt-4 p-3 rounded-lg bg-secondary/30 text-center">
           <p className="text-sm text-muted-foreground">
-            Showing 8 of {activities.length} recent activities
+            Showing 8 of {activities.length} activities
           </p>
         </div>
       )}

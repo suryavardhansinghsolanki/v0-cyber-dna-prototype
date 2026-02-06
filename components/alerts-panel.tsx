@@ -45,41 +45,47 @@ export function AlertsPanel({ alerts, onDismiss }: AlertsPanelProps) {
 
   if (alerts.length === 0) {
     return (
-      <div className="rounded-lg border border-border bg-card p-6">
-        <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
-          <Zap className="h-5 w-5 text-accent" />
+      <div className="rounded-xl border border-border/50 bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 backdrop-blur-sm">
+        <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
+          <Zap className="h-5 w-5 text-primary" />
           Recent Alerts
         </h2>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="text-4xl mb-2">✓</div>
-          <p className="text-muted-foreground">No suspicious activities detected</p>
-          <p className="text-sm text-muted-foreground mt-1">Your digital twin is monitoring 24/7</p>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 mb-4">
+            <span className="text-3xl text-green-500">✓</span>
+          </div>
+          <p className="text-foreground font-medium">All Systems Secure</p>
+          <p className="text-sm text-muted-foreground mt-2">No suspicious activities detected</p>
+          <p className="text-xs text-muted-foreground mt-1">Your digital twin is monitoring 24/7</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
-      <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
+    <div className="rounded-xl border border-border/50 bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 backdrop-blur-sm">
+      <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
         <AlertTriangle className="h-5 w-5 text-destructive" />
-        Recent Alerts ({alerts.length})
+        Security Alerts ({alerts.length})
       </h2>
       <div className="space-y-3">
         {alerts.slice(0, 5).map((alert) => (
-          <div key={alert.id} className={`rounded-lg border p-4 ${getSeverityColor(alert.severity)}`}>
+          <div key={alert.id} className={`rounded-lg border p-4 transition-all hover:border-foreground/30 ${getSeverityColor(alert.severity)}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="flex flex-1 items-start gap-3">
                 {getSeverityIcon(alert.severity)}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-sm">{alert.message}</h3>
-                  <p className="text-xs opacity-80 mt-1">
-                    {alert.activity.type} detected • Location: {alert.activity.location}
+                  <p className="text-xs opacity-80 mt-1.5">
+                    {alert.activity.type} • {alert.activity.location}
                   </p>
-                  <div className="flex items-center gap-4 mt-2">
-                    <span className="text-xs opacity-70">
-                      Risk Score: {(alert.anomalyScore * 100).toFixed(0)}%
-                    </span>
+                  <div className="flex items-center gap-4 mt-3">
+                    <div className="flex items-center gap-1">
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-current opacity-70" />
+                      <span className="text-xs opacity-70">
+                        Risk: {(alert.anomalyScore * 100).toFixed(0)}%
+                      </span>
+                    </div>
                     <span className="text-xs opacity-70">
                       {new Date(alert.timestamp).toLocaleTimeString()}
                     </span>
@@ -90,7 +96,7 @@ export function AlertsPanel({ alerts, onDismiss }: AlertsPanelProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => onDismiss(alert.id)}
-                className="h-6 w-6 p-0 hover:bg-white/10"
+                className="h-6 w-6 p-0 hover:bg-white/10 transition-colors"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -99,9 +105,9 @@ export function AlertsPanel({ alerts, onDismiss }: AlertsPanelProps) {
         ))}
       </div>
       {alerts.length > 5 && (
-        <div className="mt-4 text-center">
+        <div className="mt-4 p-3 rounded-lg bg-secondary/30 text-center">
           <p className="text-sm text-muted-foreground">
-            +{alerts.length - 5} more alerts ({alerts.filter((a) => a.severity === 'CRITICAL').length} critical)
+            +{alerts.length - 5} more alerts • {alerts.filter((a) => a.severity === 'CRITICAL').length} critical
           </p>
         </div>
       )}

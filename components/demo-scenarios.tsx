@@ -109,19 +109,19 @@ export function DemoScenarios({ onScenarioTrigger, isLoading }: DemoScenariosPro
             key={scenario.id}
             onClick={() => onScenarioTrigger(scenario)}
             disabled={isLoading}
-            className="text-left p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-secondary/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-left p-4 rounded-lg border border-border/50 bg-secondary/30 hover:border-primary/50 hover:bg-secondary/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3 flex-1">
-                <div className="mt-1 text-primary">{scenario.icon}</div>
+                <div className="mt-1 text-primary group-hover:scale-110 transition-transform">{scenario.icon}</div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-sm">{scenario.name}</h3>
+                  <h3 className="font-semibold text-sm text-foreground">{scenario.name}</h3>
                   <p className="text-xs text-muted-foreground mt-1">{scenario.description}</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="text-xs bg-secondary/50 px-2 py-1 rounded">
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="text-xs bg-secondary/60 px-2.5 py-1 rounded-md border border-border/30">
                       {scenario.activity.location}
                     </span>
-                    <span className="text-xs bg-secondary/50 px-2 py-1 rounded">
+                    <span className="text-xs bg-secondary/60 px-2.5 py-1 rounded-md border border-border/30 font-mono">
                       {scenario.activity.ipAddress}
                     </span>
                   </div>
@@ -129,13 +129,12 @@ export function DemoScenarios({ onScenarioTrigger, isLoading }: DemoScenariosPro
               </div>
               <Button
                 size="sm"
-                variant="outline"
                 onClick={(e) => {
                   e.stopPropagation();
                   onScenarioTrigger(scenario);
                 }}
                 disabled={isLoading}
-                className="gap-1"
+                className="gap-1 bg-primary hover:bg-primary/90"
               >
                 <Play className="h-3 w-3" />
                 Trigger
@@ -145,9 +144,9 @@ export function DemoScenarios({ onScenarioTrigger, isLoading }: DemoScenariosPro
         ))}
       </div>
 
-      <div className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
+      <div className="mt-6 p-4 rounded-lg bg-accent/10 border border-accent/30">
         <p className="text-xs text-muted-foreground">
-          Each scenario simulates a real-world threat that your digital twin monitors for. Watch the alerts panel update in real-time as threats are detected and analyzed.
+          Trigger scenarios to see Cyber-DNA detect threats in real-time. Watch the alerts panel update instantly as threats are analyzed.
         </p>
       </div>
     </div>
